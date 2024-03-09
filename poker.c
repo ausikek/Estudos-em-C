@@ -39,6 +39,18 @@ int main(void) {
 
 	unsigned int deck[SUITS][FACES] = {0};
 
+	unsigned int card = 1;
+
+	for (size_t row = 0; row <= 3; row++) {
+
+		for (size_t column = 0; column <= 12; column++) {
+
+			deck[row][column] = card;
+
+			card++; 
+		}
+	}
+
 	srand(time(NULL));
 
 	const char *suit[SUITS] =
@@ -72,19 +84,18 @@ int main(void) {
 
 void shuffle(unsigned int wDeck[][FACES]) {
 
-	for (size_t card = 1; card <= CARDS; card++) {
+	for (size_t row = 0; row <= 3; row++) {
 
-		size_t row; 
-		size_t column;
+		for (size_t column = 0; column <= 12; column++) {
 
-		do {
-			row = rand() % SUITS;
-			column = rand() % FACES;
+			unsigned int rand_row = rand() % SUITS;
+			unsigned int rand_column = rand() % FACES;
 
-		} while (wDeck[row][column] != 0);
+			int hold = wDeck[rand_row][rand_column];
+			wDeck[rand_row][rand_column] = wDeck[row][column];
+			wDeck[row][column] = hold;
 
-		wDeck[row][column] = card;
-
+		}
 	}
 }
 
@@ -108,6 +119,14 @@ void deal(unsigned int wDeck[][FACES],
 
 			for (size_t row = 0; row < SUITS; row++) {
 
+				int isFound = 0;
+
+				if (isFound == 1) {
+
+					break;
+
+				}
+
 				for (size_t column = 0; column < FACES; column++) {
 
 					if (wDeck[row][column] == card) {
@@ -119,6 +138,10 @@ void deal(unsigned int wDeck[][FACES],
 							format % 2 == 0 ? '\n' : '\t');
 					
 						format++;
+
+						isFound = 1;
+
+						break;
 
 					}
 				}

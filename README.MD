@@ -1,0 +1,1 @@
+Alguns exercícios que eu resolvi do livro C How to Program 
